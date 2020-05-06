@@ -2,6 +2,9 @@
 
 namespace App\Exceptions;
 
+use App\Meeting;
+use App\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -50,6 +53,16 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        if ($exception instanceof ModelNotFoundException) {
+            if ($exception->getModel() == User::class) {
+                return response()->json(['errors' => 'User not found'], 404);
+            }
+            if ($exception->getModel() == Meeting::class) {
+                return response()->json(['errors' => 'Meeting not found'], 404);
+            }
+            return response()->json(['errors' => 'Not Found!'], 404);
+        }
+
         return parent::render($request, $exception);
     }
 }

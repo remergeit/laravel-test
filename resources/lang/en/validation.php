@@ -130,8 +130,48 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'name' => [
+            'required' => 'Name field is required',
+            'max' => 'Name is too long, max 255 characters',
+        ],
+        'surname' => [
+            'required' => 'Surname field is required',
+            'max' => 'Surname is too long, max 255 characters',
+        ],
+        'email' => [
+            'required' => 'Email field is required',
+            'unique' => 'Email is already registered',
+            'max' => 'Email is too long, max 255 characters',
+        ],
+        'start' => [
+            'required' => 'Start field is required',
+            'date' => 'Start should be date and time',
+            'after' => 'Start should be after now time',
+        ],
+        'end' => [
+            'required' => 'End field is required',
+            'date' => 'End should be date and time',
+            'after' => 'End should be after now and start time',
+        ],
+        'attendees' => [
+            'required' => 'Attendees list is required',
+            'min' => 'To create a meeting, you need at least two attendees'
+        ],
+        'attendees.*.id' => [
+            'required' => 'Attendee should have id of user',
+            'distinct' => 'Attendees list shouldn\'t have duplicates',
+            'exists' => 'Attendees list contains non-existent user',
+        ],
+        'facilitator_id' => [
+            'required' => 'Facilitator role is required',
+            'exists' => 'A non-existent user is assigned for the facilitator role',
+            'in_array' => 'User assigned for the facilitator role should be in attendees list',
+        ],
+        'secretary_id' => [
+            'required' => 'Secretary role is required',
+            'exists' => 'A non-existent user is assigned for the secretary role',
+            'different' => 'Users assigned for the facilitator and secretary roles should be different',
+            'in_array' => 'User assigned for the secretary role should be in attendees list',
         ],
     ],
 
